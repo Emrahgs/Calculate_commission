@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+{% endblock %} {% block content %}
+
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron mt-4">
+          <h1>
+            Welcome to the
+            <span class="text-primary">Calculate commission</span>!
+          </h1>
+          <div class="d-flex flex-column align-items-lg-end">
+            <p class="text-end">Example CSV File</p>
+            <a href="{% url 'core:download' %}" class="btn btn-primary">Download</a>
+          </div>
+
+          <hr />
+
+          <p>Upload your CSV file </p>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+              <input
+                type="file"
+                accept="text/csv"
+                class="form-control"
+                id="exampleFormControlFile1"
+                name="myfile"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %} {% block js %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

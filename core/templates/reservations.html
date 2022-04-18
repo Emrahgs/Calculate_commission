@@ -1,0 +1,51 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} Reservations {% endblock %} 
+
+{% block content %}
+<main>
+  <h5 class="my-4">All Reservations</h5>
+
+  <input class="form-control" type="month" min="2021-01" max="2021-12" onchange="onChange(this.value)" />
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Reservation</th>
+          <th scope="col">Check in</th>
+          <th scope="col">Checkout</th>
+          <th scope="col">Flat</th>
+          <th scope="col">City</th>
+          <th scope="col">Net incoming:</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reservation in commissions %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{reservation.reservation}}</td>
+          <td>{{reservation.check_in}}</td>
+          <td>{{reservation.checkout}}</td>
+          <td>{{reservation.flat}}</td>
+          <td>{{reservation.city}}</td>
+          <td>{{reservation.net_incoming}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p class="text-end">Total Company Commission Amount: <b>${{total}}</b></p>
+  </div>
+</main>
+
+{% endblock %} 
+
+{% block js %}
+<script>
+  function onChange(val) {
+    var url = "{% url 'core:reservations' %}" + '?month=' + val;
+    window.location.href = url;
+  }
+</script>
+{% endblock %} 

@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Commissions 
+{% endblock %} {% block content %}
+<main>
+  <h4 class="my-4">Commissions</h4>
+  <select class="form-control" name="city" id="city">
+    <option value="" selected disabled>Select City for Commission</option>
+    <option {% if 'LONDON' in request.GET.city %} selected {% endif %} value="LONDON">London</option>
+    <option {% if 'PARIS' in request.GET.city %} selected {% endif %} value="PARIS">Paris</option>
+    <option {% if 'PORTO' in request.GET.city %} selected {% endif %} value="PORTO">Porto</option>
+  </select>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Reservation</th>
+          <th scope="col">Check in</th>
+          <th scope="col">Checkout</th>
+          <th scope="col">Flat</th>
+          <th scope="col">City</th>
+          <th scope="col">Net incoming:</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for commission in commissions %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{commission.reservation}}</td>
+          <td>{{commission.check_in}}</td>
+          <td>{{commission.checkout}}</td>
+          <td>{{commission.flat}}</td>
+          <td>{{commission.city}}</td>
+          <td>{{commission.net_incoming}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p class="text-end">Total Company Commission Amount: <b>${{total}}</b></p>
+  </div>
+</main>
+
+{% endblock %} 
+
+{% block js %} 
+<script>
+    $('#city').change(function(){
+        var city = $('#city').val();
+        var url = "{% url 'core:commissions' %}" + '?city=' + city;
+        window.location.href = url;
+    });
+</script>
+{% endblock %}
